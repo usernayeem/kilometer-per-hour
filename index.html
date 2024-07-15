@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Speed Meter</title>
+    <link rel="shortcut icon" href="speed.webp" type="image/x-icon">
+    <style type="text/css" media="all">
+        /* Importing Google Fonts */
+        @import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            width: 100vw;
+        }
+
+        /* Styling for headings */
+        h1 {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-size: 48px;
+        }
+
+        /* Styling for paragraphs */
+        p {
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 1px;
+            font-size: 14px;
+            color: #333333;
+        }
+
+        /* Styling for header section */
+        .app-header {
+            position: relative;
+            text-align: center;
+            background: linear-gradient(60deg, rgba(84, 58, 183, 1) 0%, rgba(0, 172, 193, 1) 100%);
+            color: white;
+        }
+
+        /* Styling for logo */
+        .app-logo {
+            width: 50px;
+            fill: white;
+            padding-right: 15px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Styling for inner header */
+        .app-inner-header {
+            height: 65vh;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Flexbox for containers */
+        .flex-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Styling for wave animation */
+        .app-waves {
+            position: relative;
+            width: 100%;
+            height: 15vh;
+            margin-bottom: -7px;
+            /*Fix for safari gap*/
+            min-height: 100px;
+            max-height: 150px;
+        }
+
+        /* Styling for content section */
+        .app-content {
+            position: relative;
+            height: 20vh;
+            text-align: center;
+            background-color: white;
+        }
+
+        /* Animation for wave movement */
+        .parallax>use {
+            animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
+        }
+
+        /* Delay for each wave */
+        .parallax>use:nth-child(1) {
+            animation-delay: -2s;
+            animation-duration: 7s;
+        }
+
+        .parallax>use:nth-child(2) {
+            animation-delay: -3s;
+            animation-duration: 10s;
+        }
+
+        .parallax>use:nth-child(3) {
+            animation-delay: -4s;
+            animation-duration: 13s;
+        }
+
+        .parallax>use:nth-child(4) {
+            animation-delay: -5s;
+            animation-duration: 20s;
+        }
+
+        /* Keyframes for wave movement */
+        @keyframes move-forever {
+            0% {
+                transform: translate3d(-90px, 0, 0);
+            }
+
+            100% {
+                transform: translate3d(85px, 0, 0);
+            }
+        }
+
+        /* Styling for speed display */
+        .speed-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 1rem;
+            max-width: 90vw;
+            min-width: 300px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Styling for speed display text */
+        .speed-display p {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Styling for speed display unit */
+        .speed-display span {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-left: 1rem;
+            color: white;
+        }
+
+        /* Styling for max speed display */
+        .max-speed-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: calc(50% + 100px);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 60vw;
+            min-width: 200px;
+            height: 65px;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        /* Styling for max speed display text */
+        .max-speed-display p {
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Styling for max speed display unit */
+        .max-speed-display span {
+            margin-left: 0.5rem;
+        }
+
+        .developer {
+            position: absolute;
+            top: 85vh;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+        }
+
+        /* Media query for mobile screens */
+        @media (max-width: 768px) {
+            .app-waves {
+                height: 40px;
+                min-height: 40px;
+            }
+
+            .app-content {
+                height: 30vh;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header section -->
+    <div class="app-header">
+        <!-- Content before waves -->
+        <div class="app-inner-header flex-container"></div>
+        <!-- Speed display -->
+        <div class="speed-display">
+            <p id="speed">Speed : 00</p>
+            <span>km/h</span>
+        </div>
+        <!-- Max speed display -->
+        <div class="max-speed-display">
+            <p id="max-speed">Max : 00</p>
+            <span>km/h</span>
+        </div>
+        <p class="developer">Developed by Md Nayeem</p>
+        <!-- Wave animation -->
+        <div>
+            <svg class="app-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave"
+                        d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- JavaScript for speed calculation -->
+        <script type="text/javascript" charset="utf-8">
+            var speedDisplay = document.getElementById("speed");
+            var maxSpeedDisplay = document.getElementById("max-speed");
+            var maxSpeed = 0;
+
+            (function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.watchPosition(showPosition);
+                } else {
+                    speedDisplay.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            })();
+
+            function showPosition(position) {
+                var kmh = position.coords.speed;
+                var speed = kmh * 3.6;
+                speedDisplay.innerHTML = "Speed : " + speed.toFixed(2);
+
+                if (speed > maxSpeed) {
+                    maxSpeed = speed;
+                    maxSpeedDisplay.innerHTML = "Max : " + maxSpeed.toFixed(2);
+                };
+            }
+        </script>
+</body>
+
+</html>
